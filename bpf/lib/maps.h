@@ -31,26 +31,24 @@ struct {
 
 #ifndef SKIP_POLICY_MAP
 /* Global map to jump into policy enforcement of receiving endpoint */
-struct bpf_elf_map __section_maps POLICY_CALL_MAP = {
-	.type		= BPF_MAP_TYPE_PROG_ARRAY,
-	.id		= CILIUM_MAP_POLICY,
-	.size_key	= sizeof(__u32),
-	.size_value	= sizeof(__u32),
-	.pinning	= PIN_GLOBAL_NS,
-	.max_elem	= POLICY_PROG_MAP_SIZE,
-};
+struct {
+	__uint(type, BPF_MAP_TYPE_PROG_ARRAY);
+	__type(key, __u32);
+	__type(value, __u32);
+	__uint(pinning, LIBBPF_PIN_BY_NAME);
+	__uint(max_entries, POLICY_PROG_MAP_SIZE);
+} POLICY_CALL_MAP __section_maps_btf;
 #endif /* SKIP_POLICY_MAP */
 
 #ifdef ENABLE_L7_LB
 /* Global map to jump into policy enforcement of sending endpoint */
-struct bpf_elf_map __section_maps POLICY_EGRESSCALL_MAP = {
-	.type		= BPF_MAP_TYPE_PROG_ARRAY,
-	.id		= CILIUM_MAP_EGRESSPOLICY,
-	.size_key	= sizeof(__u32),
-	.size_value	= sizeof(__u32),
-	.pinning	= PIN_GLOBAL_NS,
-	.max_elem	= POLICY_PROG_MAP_SIZE,
-};
+struct {
+	__uint(type, BPF_MAP_TYPE_PROG_ARRAY);
+	__type(key, __u32);
+	__type(value, __u32);
+	__uint(pinning, LIBBPF_PIN_BY_NAME);
+	__uint(max_entries, POLICY_PROG_MAP_SIZE);
+} POLICY_EGRESSCALL_MAP __section_maps_btf;
 #endif
 
 #ifdef ENABLE_BANDWIDTH_MANAGER
@@ -89,14 +87,13 @@ struct {
 
 #ifndef SKIP_CALLS_MAP
 /* Private per EP map for internal tail calls */
-struct bpf_elf_map __section_maps CALLS_MAP = {
-	.type		= BPF_MAP_TYPE_PROG_ARRAY,
-	.id		= CILIUM_MAP_CALLS,
-	.size_key	= sizeof(__u32),
-	.size_value	= sizeof(__u32),
-	.pinning	= PIN_GLOBAL_NS,
-	.max_elem	= CILIUM_CALL_SIZE,
-};
+struct {
+	__uint(type, BPF_MAP_TYPE_PROG_ARRAY);
+	__type(key, __u32);
+	__type(value, __u32);
+	__uint(pinning, LIBBPF_PIN_BY_NAME);
+	__uint(max_entries, CILIUM_CALL_SIZE);
+} CALLS_MAP __section_maps_btf;
 #endif /* SKIP_CALLS_MAP */
 
 #ifdef HAVE_ENCAP
@@ -118,14 +115,13 @@ struct {
  * to use the map, so we do not want to compile this definition if
  * CUSTOM_CALLS_MAP has not been #define-d.
  */
-struct bpf_elf_map __section_maps CUSTOM_CALLS_MAP = {
-	.type		= BPF_MAP_TYPE_PROG_ARRAY,
-	.id		= CILIUM_MAP_CUSTOM_CALLS,
-	.size_key	= sizeof(__u32),
-	.size_value	= sizeof(__u32),
-	.pinning	= PIN_GLOBAL_NS,
-	.max_elem	= 4,	/* ingress and egress, IPv4 and IPv6 */
-};
+struct {
+	__uint(type, BPF_MAP_TYPE_PROG_ARRAY);
+	__type(key, __u32);
+	__type(value, __u32);
+	__uint(pinning, LIBBPF_PIN_BY_NAME);
+	__uint(max_entries, 4);
+} CUSTOM_CALLS_MAP __section_maps_btf;
 
 #define CUSTOM_CALLS_IDX_IPV4_INGRESS	0
 #define CUSTOM_CALLS_IDX_IPV4_EGRESS	1

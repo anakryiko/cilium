@@ -20,6 +20,8 @@
 #include "lib/pcap.h"
 #include "lib/trace_sock.h"
 
+BPF_LICENSE("Dual BSD/GPL");
+
 struct ipv4_ct_tuple _1;
 struct ipv6_ct_tuple _2;
 struct ct_entry _3;

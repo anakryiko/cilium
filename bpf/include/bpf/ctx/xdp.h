@@ -7,6 +7,8 @@
 #include <linux/if_ether.h>
 #include <linux/byteorder.h>
 
+#define DEF_PROG_TYPE "xdp"
+
 #define __ctx_buff			xdp_md
 #define __ctx_is			__ctx_xdp
 

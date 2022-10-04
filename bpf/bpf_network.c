@@ -11,7 +11,7 @@
 #include "lib/trace.h"
 #include "lib/encrypt.h"
 
-__section("from-network")
+__section(DEF_PROG_TYPE)
 int cil_from_network(struct __ctx_buff *ctx)
 {
 	int ret = CTX_ACT_OK;
